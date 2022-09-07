@@ -1,36 +1,28 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
-#include<cmath>
-#include <numeric>
+#include <vector>
+
 using namespace std;
 
-int main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-	cout.tie(NULL);
+bool cmp(const pair<int, int>& a, const pair<int, int>& b) {
+	if (a.second != b.second) {
+		return a.second < b.second;
+	}
+	else
+		return a.first < b.first;
+}
 
-	int n, a, max = 0, tmp;
+int main()
+{
+	int n;
 	cin >> n;
-	vector<int>arr(n), cnt(8001);
-
+	vector<pair<int, int>> arr(n);
 	for (int i = 0; i < n; i++) {
-		cin >> arr[i];
-		cnt[4000+arr[i]]++;
-		cnt[4000 + arr[i]] > max ? max = cnt[4000 + arr[i]] : tmp = i;
+		cin >> arr[i].first >> arr[i].second;
 	}
-
-	sort(arr.begin(), arr.end());
-
-	for (; tmp >= 0; tmp--) {
-		if (max == cnt[tmp])
-			break;
+	sort(arr.begin(), arr.end(), cmp);
+	for (int i = 0; i < n; i++) {
+		cout << arr[i].first << " " << arr[i].second << "\n";
 	}
-	int sum = accumulate(arr.begin(), arr.end(), 0);
-	
-	cout << round(sum / double(n)) << "\n";
-	cout << arr[(n + 1) / 2] << "\n";
-	cout << tmp-4000 << "\n";
-	cout << arr[n - 1] - arr[0];
 	return 0;
 }
